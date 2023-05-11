@@ -14,9 +14,7 @@ const FadedOverlay = ({ children, enabled }: FadedOverlayProps) => {
         className="absolute top-0 right-0 left-0 bottom-0"
         style={{
           background:
-            typeof window !== "undefined"
-              ? "linear-gradient(to bottom, transparent 0%, rgba(255, 255, 255, 0) 65%, rgba(255, 255, 255, 1) 90%)"
-              : "",
+            "linear-gradient(to bottom, transparent 0%, transparent 70%, rgba(255, 255, 255, 1) 90%)",
         }}
       >
         <div style={{ zIndex: -1 }} className="relative w-full h-full">
