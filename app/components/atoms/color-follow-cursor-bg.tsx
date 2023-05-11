@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-interface ColorFollowCursorBgProps {
+interface ColourFollowCursorBgProps {
   children: React.ReactNode;
 }
 
-const ColorFollowCursorBg = ({ children }: ColorFollowCursorBgProps) => {
+const ColourFollowCursorBg = ({ children }: ColourFollowCursorBgProps) => {
   const [elementRect, setElementRect] = useState<DOMRect | null>(null);
   const [mousePos, setMousePos] = useState<{ x: number; y: number }>({
     x: 0,
@@ -27,7 +27,7 @@ const ColorFollowCursorBg = ({ children }: ColorFollowCursorBgProps) => {
 
   useEffect(() => {
     const updateElementRect = () => {
-      const element = document.getElementById("color-follow-cursor-bg");
+      const element = document.getElementById("colour-follow-cursor-bg");
       if (element) {
         setElementRect(element.getBoundingClientRect());
       }
@@ -53,7 +53,7 @@ const ColorFollowCursorBg = ({ children }: ColorFollowCursorBgProps) => {
 
   return (
     <div
-      id="color-follow-cursor-bg"
+      id="colour-follow-cursor-bg"
       className="-z-10 relative"
       style={{
         background: `radial-gradient(120px 120px at ${gradientX}% ${gradientY}%, rgb(230, 230, 230), rgb(255, 255, 255))`,
@@ -64,4 +64,4 @@ const ColorFollowCursorBg = ({ children }: ColorFollowCursorBgProps) => {
   );
 };
 
-export default ColorFollowCursorBg;
+export default ColourFollowCursorBg;

@@ -17,9 +17,7 @@ const FadedOverlay = ({ children, enabled }: FadedOverlayProps) => {
             "linear-gradient(to bottom, transparent 0%, transparent 70%, rgba(255, 255, 255, 1) 90%)",
         }}
       >
-        <div style={{ zIndex: -1 }} className="relative w-full h-full">
-          {children}
-        </div>
+        <div className="-z-10 relative w-full h-full">{children}</div>
       </div>
     </div>
   );
