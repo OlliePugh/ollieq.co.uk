@@ -1,4 +1,7 @@
+import { Project } from "@/app/types";
 import FadeInSection from "../atoms/fade-in-section";
+import { FaYoutube } from "react-icons/fa";
+import { TechLogo } from "../atoms/tech-icons";
 
 const ProjectTile = ({ project }: { project: Project }) => {
   return (
@@ -16,11 +19,31 @@ const ProjectTile = ({ project }: { project: Project }) => {
               />
             </div>
           </div>
-          <div className="w-full p-4 flex justify-between gap-4">
-            <p className="whitespace-nowrap overflow-ellipsis overflow-hidden">
-              {project.title}
-            </p>
-            <div>Icon</div>
+          <div className="w-full p-4 flex flex-col sm:flex-row gap-2 sm:gap-4">
+            <div className="flex flex-1 justify-center sm:justify-normal items-center overflow-hidden">
+              {project.youtubeUrl && (
+                <div className="pr-2 hidden sm:block">
+                  <FaYoutube color="red" />
+                </div>
+              )}
+              <p className="whitespace-nowrap inline overflow-ellipsis overflow-hidden">
+                {project.title}
+              </p>
+            </div>
+            <div className="flex flex-row gap-1 h-6">
+              {project.youtubeUrl && (
+                <div className="flex flex-col justify-center sm:pr-2 sm:hidden">
+                  <FaYoutube color="red" />
+                </div>
+              )}
+              <div className="grow sm:grow-0" />
+              {project.technologiesUsed.slice(0, 3).map((tech) => (
+                <TechLogo height={16} width={16} tech={tech} key={tech} />
+              ))}
+              {project.technologiesUsed.length > 3 && (
+                <p>+{project.technologiesUsed.length - 3}</p>
+              )}
+            </div>
           </div>
         </div>
       </div>

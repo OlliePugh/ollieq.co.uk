@@ -4,13 +4,7 @@ import FadedOverlay from "../atoms/faded-overlay";
 import IntroSection from "../atoms/intro-section";
 import ProjectTile from "./project-tile";
 import { HiChevronDoubleDown } from "react-icons/hi2";
-
-const fakeProject: Project = {
-  title: "Some interactive project",
-  imagePath: "/images/headshot.jpeg",
-  technologiesUsed: [],
-  youtubeUrl: "",
-};
+import projects from "@/app/projects";
 
 const Projects = () => {
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -37,12 +31,9 @@ const Projects = () => {
       >
         <h1 className="text-center font-bold text-2xl">Projects</h1>
         <div className="flex flex-wrap justify-center pt-8 gap-6">
-          <ProjectTile project={fakeProject} />
-          <ProjectTile project={fakeProject} />
-          <ProjectTile project={fakeProject} />
-          <ProjectTile project={fakeProject} />
-          <ProjectTile project={fakeProject} />
-          <ProjectTile project={fakeProject} />
+          {Object.entries(projects).map(([id, project]) => (
+            <ProjectTile project={project} key={id} />
+          ))}
         </div>
         <div
           className={`absolute bottom-0 left-0 right-0 ${

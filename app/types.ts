@@ -1,11 +1,16 @@
-interface Project {
+export interface Project {
   title: string;
   imagePath: string;
   technologiesUsed: Tech[];
-  youtubeUrl: string;
+  youtubeUrl?: string;
 }
 
-enum Tech {
+export enum Tech {
   JAVASCRIPT = "javascript",
   TYPESCRIPT = "typescript",
+  FIREBASE = "firebase",
+  ARDUINO = "arduino",
+  REACT = "react",
+  UNITY = "unity",
+  CSHARP = "csharp",
 }
