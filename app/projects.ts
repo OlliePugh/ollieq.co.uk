@@ -1,6 +1,6 @@
 import { Project, Tech } from "./types";
 
-interface ProjectMap {
+export interface ProjectMap {
   [index: string]: Project;
 }
 
