@@ -28,6 +28,12 @@ const projects: ProjectMap = {
     technologiesUsed: [Tech.REACT, Tech.JAVASCRIPT, Tech.UNITY, Tech.CSHARP],
     youtubeUrl: "https://youtu.be/bmulngc14-U",
   },
+  "rc-rocket-league": {
+    title: "Internet RC Rocket League",
+    imagePath: "/images/vr-horror.png",
+    technologiesUsed: [Tech.REACT, Tech.JAVASCRIPT, Tech.UNITY, Tech.CSHARP],
+    youtubeUrl: "https://youtu.be/bmulngc14-U",
+  },
 };
 
 export default projects;

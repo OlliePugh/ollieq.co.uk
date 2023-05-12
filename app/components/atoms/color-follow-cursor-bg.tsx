@@ -1,63 +1,100 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface ColourFollowCursorBgProps {
   children: React.ReactNode;
+  className?: string;
+  foregroundColour: string;
+  backgroundColour: string;
+  radius: number;
+  increaseRate?: number;
+  decreaseRate?: number;
 }
 
-const ColourFollowCursorBg = ({ children }: ColourFollowCursorBgProps) => {
-  const [elementRect, setElementRect] = useState<DOMRect | null>(null);
-  const [mousePos, setMousePos] = useState<{ x: number; y: number }>({
-    x: 0,
-    y: 0,
-  });
+interface MousePosition {
+  x: number;
+  y: number;
+}
+
+const ColourFollowCursorBg: React.FC<ColourFollowCursorBgProps> = ({
+  children,
+  className,
+  foregroundColour,
+  backgroundColour,
+  radius: desiredRadius,
+  increaseRate = 50,
+  decreaseRate = 50,
+}) => {
+  const [mousePos, setMousePos] = useState<MousePosition>({ x: -1, y: -1 });
+  const [mouseIn, setMouseIn] = useState<boolean>(false);
+  const [radius, setRadius] = useState<number>(0);
+  const componentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+
+    if (mouseIn && radius < desiredRadius) {
+      interval = setInterval(() => {
+        setRadius((prevRadius) => {
+          const nextRadius = prevRadius + increaseRate;
+          return nextRadius >= desiredRadius ? desiredRadius : nextRadius;
+        });
+      }, 10);
+    } else if (!mouseIn && radius > 0) {
+      interval = setInterval(() => {
+        setRadius((prevRadius) => {
+          const nextRadius = prevRadius - decreaseRate;
+          return nextRadius <= 0 ? 0 : nextRadius;
+        });
+      }, 10);
+    }
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [mouseIn, radius, desiredRadius, increaseRate, decreaseRate]);
 
   useEffect(() => {
     const handleMouseMove = (event: MouseEvent) => {
-      setMousePos({ x: event.clientX, y: event.clientY });
-    };
+      if (componentRef.current) {
+        const componentRect = componentRef.current.getBoundingClientRect();
+        const isInsideComponent =
+          event.clientX >= componentRect.left &&
+          event.clientX <= componentRect.right &&
+          event.clientY >= componentRect.top &&
+          event.clientY <= componentRect.bottom;
 
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
-  }, []);
-
-  useEffect(() => {
-    const updateElementRect = () => {
-      const element = document.getElementById("colour-follow-cursor-bg");
-      if (element) {
-        setElementRect(element.getBoundingClientRect());
+        if (isInsideComponent) {
+          const offsetX = event.clientX - componentRect.left;
+          const offsetY = event.clientY - componentRect.top;
+          setMousePos({ x: offsetX, y: offsetY });
+          setMouseIn(true);
+        } else {
+          setMouseIn(false);
+        }
       }
     };
 
-    updateElementRect();
-    window.addEventListener("resize", updateElementRect);
+    document.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      window.removeEventListener("resize", updateElementRect);
+      document.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
-  const gradientX =
-    elementRect && elementRect.width > 0
-      ? ((mousePos.x - elementRect.left) / elementRect.width) * 100
-      : 0;
-
-  const gradientY =
-    elementRect && elementRect.height > 0
-      ? ((mousePos.y - elementRect.top) / elementRect.height) * 100
-      : 0;
+  const backgroundStyle = {
+    background:
+      mouseIn || radius !== 0
+        ? `radial-gradient(${radius}px ${radius}px at ${mousePos.x}px ${mousePos.y}px, ${foregroundColour}, ${backgroundColour})`
+        : backgroundColour,
+  };
 
   return (
     <div
-      id="colour-follow-cursor-bg"
-      className="-z-10 relative"
-      style={{
-        background: `radial-gradient(120px 120px at ${gradientX}% ${gradientY}%, rgb(230, 230, 230), rgb(255, 255, 255))`,
-      }}
+      ref={componentRef}
+      className={`-z-10 relative ${className ?? ""}`}
+      style={backgroundStyle}
     >
       {children}
     </div>
