@@ -1,3 +1,5 @@
+import FadeInSection from "./fade-in-section";
+
 interface IntersectionProps {
   className?: string;
   children: React.ReactNode;
@@ -5,9 +7,11 @@ interface IntersectionProps {
 
 const IntroSection = ({ className, children }: IntersectionProps) => {
   return (
-    <div className={`${className || ""} flex justify-center`}>
-      <div className="max-w-screen-2xl">{children}</div>
-    </div>
+    <FadeInSection>
+      <div className={`${className ? className : ""} flex justify-center`}>
+        <div className="max-w-screen-2xl w-full">{children}</div>
+      </div>
+    </FadeInSection>
   );
 };
 

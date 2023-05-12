@@ -8,6 +8,7 @@ export default function Home() {
       <IntroductionName />
       <AboutMe />
       <Projects />
+      <div className="h-[40rem]"></div>
     </main>
   );
 }

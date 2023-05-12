@@ -40,12 +40,15 @@ const IntroductionName = () => {
         </div>
         <div className="basis-1/3 md:drop-shadow-2xl">
           <div className=" h-48 w-48 sm:h-64 sm:w-64 relative flex m-auto md:m-0 rounded-full overflow-hidden z-1 scale-[1.01]">
-            <FadedOverlay enabled={!isAboveMdThreshold}>
-              <div className="scale-[0.99] w-full h-full">
-                {/* scale is required to hide a strange border clipping issue */}
-                <HeadshotImage />
-              </div>
-            </FadedOverlay>
+            <div className="scale-[0.99] w-full h-full">
+              {/* scale is required to hide a strange border clipping issue */}
+              <HeadshotImage className="-z-10" />
+              <FadedOverlay
+                fullPercent={70}
+                className="absolute bottom-0 z-10 h-16 sm:h-20"
+                enabled={!isAboveMdThreshold}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -1,13 +1,13 @@
 import Image from "next/image";
 
-const HeadshotImage = () => {
+const HeadshotImage = ({ className }: { className: string }) => {
   return (
     <Image
       src={"/images/headshot.jpeg"}
       alt="Picture of the author"
       priority
       fill
-      className="rounded-full" // just an example
+      className={`rounded-full ${className}`}
     />
   );
 };
