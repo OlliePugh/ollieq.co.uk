@@ -32,7 +32,7 @@ const Projects = () => {
         <h1 className="text-center font-bold text-2xl">Projects</h1>
         <div className="flex flex-wrap justify-center pt-8 gap-6">
           {Object.entries(projects).map(([id, project]) => (
-            <ProjectTile project={project} key={id} />
+            <ProjectTile project={project} key={id} href={id} />
           ))}
         </div>
         <div
