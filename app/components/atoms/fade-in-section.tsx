@@ -1,7 +1,13 @@
 "use client";
 import { ReactNode, useEffect, useRef, useState } from "react";
 
-const FadeInSection = ({ children }: { children: ReactNode }) => {
+const FadeInSection = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
   const shouldFadeIn: IntersectionObserverCallback = (
     entries: IntersectionObserverEntry[]
   ) => {
@@ -32,7 +38,7 @@ const FadeInSection = ({ children }: { children: ReactNode }) => {
 
   return (
     <div
-      className={`duration-1000 transition-all ${
+      className={`duration-1000 transition-all ${className ?? ""} ${
         isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5"
       }`}
       ref={domRef}

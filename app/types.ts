@@ -3,6 +3,7 @@ export interface Project {
   imagePath: string;
   technologiesUsed: Tech[];
   youtubeUrl?: string;
+  content: React.ReactNode;
 }
 
 export enum Tech {
